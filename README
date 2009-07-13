@@ -1,0 +1,12 @@
+Mischief
+========
+
+A Ruby script to add random jitter to Flash Motion XML files.
+
+Usage:
+    ./mischief -r 5 -f ./motionxml.xml
+
+-r : random x/y amount
+-f : target file
+
+currently the results are outputted to "randomout.xml"

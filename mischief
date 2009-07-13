@@ -1,0 +1,32 @@
+#!/usr/bin/env ruby -w
+require "rubygems"
+require "simpleconsole"
+# require File.dirname(__FILE__) + "/../"
+
+class Controller < SimpleConsole::Controller
+  params :int => {:r => :random},
+           :text => {:f => :file}
+  
+  def default
+    @message = "Adds Random motion to a Flash XML file"
+    @random  = params[:random]
+    @filepath    = params[:file]
+  end
+end
+
+class View < SimpleConsole::View
+  def default
+    outFile = File.new('randomout.xml', 'w')
+    File.open(@filepath, 'r') do |inFile|
+      inFile.each_line do |line|
+        @xrand = @random*-1 + rand(@random*2)
+        @yrand = @random*-1 + rand(@random*2)
+        cords = " x=\"#{@xrand}\" y=\"#{@yrand}\""
+        outFile.puts(line.sub(/index="(.*)"/, '\0'+cords))
+      end
+    end
+    outFile.close
+  end
+end
+
+SimpleConsole::Application.run(ARGV, Controller, View)
